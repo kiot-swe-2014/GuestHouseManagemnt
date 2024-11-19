@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/guesthousemanagementsystem/GuestHouseManagementSystem.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Models/User.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/GUI/RegistrationForm.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Models/Bill.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Database/UserDB.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/GUI/AdminDashboardForm.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Database/RoomDB.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Database/DBConnection.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/GUI/RoomManagementForm.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Database/BillDB.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/GUI/ReservationManagementForm.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Models/Room.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/GUI/ReservationForm.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/GUI/ReportsForm.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Models/Reservation.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/GUI/LoginForm.java</file>
+            <file>file:/C:/Users/USER/OneDrive/Documents/NetBeansProjects/GuestHouseManagementSystem/src/Database/ReservationDB.java</file>
+        </group>
+    </open-files>
+</project-private>
