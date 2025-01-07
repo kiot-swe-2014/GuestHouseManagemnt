@@ -7,13 +7,11 @@ package gui;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class AdminDashboardForm extends JFrame {
 
     private JButton btnManageRooms;
-    private JButton btnManageReservations;
-    private JButton btnGenerateReports;
+    private JButton btnManageUsers; // Button for managing users
     private JLabel lblStatus;
     private JPanel panel;
 
@@ -52,55 +50,30 @@ public class AdminDashboardForm extends JFrame {
         btnManageRooms.setFocusPainted(false);
         btnManageRooms.setBorderPainted(false);
         btnManageRooms.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnManageRooms.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Open Room Management Form
-                new RoomManagementForm(); 
-                dispose(); // Close the dashboard
-            }
+        btnManageRooms.addActionListener(e -> {
+            // Open Room Management Form
+            new RoomManagementForm().setVisible(true); // Ensure the new form is visible
+            dispose(); // Close the dashboard
         });
         panel.add(btnManageRooms);
 
-        // Button to manage reservations
-        btnManageReservations = new JButton("Manage Reservations");
-        btnManageReservations.setFont(new Font("Arial", Font.BOLD, 16));
-        btnManageReservations.setBackground(new Color(255, 99, 71)); // Tomato color
-        btnManageReservations.setForeground(Color.WHITE);
-        btnManageReservations.setBounds(200, 180, 200, 40);
-        btnManageReservations.setFocusPainted(false);
-        btnManageReservations.setBorderPainted(false);
-        btnManageReservations.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnManageReservations.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Open Reservation Management Form
-                new ReservationManagementForm(); 
-                dispose(); // Close the dashboard
-            }
+        // Button to manage users
+        btnManageUsers = new JButton("Manage Users");
+        btnManageUsers.setFont(new Font("Arial", Font.BOLD, 16));
+        btnManageUsers.setBackground(new Color(60, 179, 113)); // Medium Sea Green
+        btnManageUsers.setForeground(Color.WHITE);
+        btnManageUsers.setBounds(200, 180, 200, 40);
+        btnManageUsers.setFocusPainted(false);
+        btnManageUsers.setBorderPainted(false);
+        btnManageUsers.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        btnManageUsers.addActionListener(e -> {
+            // Open Manage Users Form
+            new ManageUsersForm().setVisible(true); // Open Manage Users Form
+            dispose(); // Close the dashboard
         });
-        panel.add(btnManageReservations);
+        panel.add(btnManageUsers);
 
-        // Button to generate reports
-        btnGenerateReports = new JButton("Generate Reports");
-        btnGenerateReports.setFont(new Font("Arial", Font.BOLD, 16));
-        btnGenerateReports.setBackground(new Color(60, 179, 113)); // Medium Sea Green
-        btnGenerateReports.setForeground(Color.WHITE);
-        btnGenerateReports.setBounds(200, 240, 200, 40);
-        btnGenerateReports.setFocusPainted(false);
-        btnGenerateReports.setBorderPainted(false);
-        btnGenerateReports.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnGenerateReports.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Open Reports Form
-                new ReportsForm(); 
-                dispose(); // Close the dashboard
-            }
-        });
-        panel.add(btnGenerateReports);
-
-        // Button to log out (Back to login screen)
+        // Button to log out
         JButton btnLogout = new JButton("Log Out");
         btnLogout.setFont(new Font("Arial", Font.BOLD, 14));
         btnLogout.setBackground(new Color(255, 69, 0)); // Red-Orange color
@@ -109,13 +82,10 @@ public class AdminDashboardForm extends JFrame {
         btnLogout.setFocusPainted(false);
         btnLogout.setBorderPainted(false);
         btnLogout.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnLogout.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Redirect to Login form
-                new LoginForm();
-                dispose(); // Close the dashboard
-            }
+        btnLogout.addActionListener(e -> {
+            // Redirect to Login form
+            new LoginForm().setVisible(true); // Open Login Form
+            dispose(); // Close the dashboard
         });
         panel.add(btnLogout);
 

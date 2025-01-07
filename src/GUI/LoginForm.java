@@ -6,126 +6,150 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import Database.UserDB;
+import models.User;
 
 public class LoginForm extends JFrame {
-
-    private JTextField txtUsername;
-    private JPasswordField txtPassword;
-    private JButton btnLogin, btnRegister;
-    private JLabel lblErrorMessage;
+    private JTextField usernameField;
+    private JPasswordField passwordField;
+    private JButton loginButton, registerButton;
 
     public LoginForm() {
-        // Setup the frame
-        setTitle("Login - Guest House Management");
-        setSize(400, 300);
+        // Frame setup
+        setTitle("Login");
+        setSize(400, 350);  // Adjusted size for better spacing
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);  // Center the window
-        setResizable(false);
+        setLocationRelativeTo(null);
 
-        // Panel for the form
-        JPanel panel = new JPanel();
-        panel.setLayout(null);
-        panel.setBackground(new Color(240, 240, 240));  // Light Gray Background
-        add(panel);
+        // Main panel setup
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(5, 2, 10, 20));  // Adjusted for better layout
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Title
-        JLabel lblTitle = new JLabel("Login");
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTitle.setBounds(150, 20, 100, 30);
-        panel.add(lblTitle);
+        // Title label
+        JLabel titleLabel = new JLabel("Login to Your Account", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 24));
+        titleLabel.setForeground(new Color(41, 128, 185));
+        mainPanel.add(titleLabel);
+        mainPanel.add(new JLabel());  // Empty space to maintain layout
 
-        // Username Label and TextField
-        JLabel lblUsername = new JLabel("Username:");
-        lblUsername.setBounds(50, 80, 100, 25);
-        panel.add(lblUsername);
-
-        txtUsername = new JTextField();
-        txtUsername.setBounds(150, 80, 200, 25);
-        panel.add(txtUsername);
-
-        // Password Label and PasswordField
-        JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setBounds(50, 120, 100, 25);
-        panel.add(lblPassword);
-
-        txtPassword = new JPasswordField();
-        txtPassword.setBounds(150, 120, 200, 25);
-        panel.add(txtPassword);
-
-        // Error message label (initially hidden)
-        lblErrorMessage = new JLabel();
-        lblErrorMessage.setForeground(Color.RED);
-        lblErrorMessage.setBounds(50, 160, 300, 25);
-        lblErrorMessage.setVisible(false);
-        panel.add(lblErrorMessage);
-
-        // Login Button
-        btnLogin = new JButton("Login");
-        btnLogin.setBounds(50, 200, 150, 40);
-        btnLogin.setBackground(new Color(34, 193, 195));
-        btnLogin.setForeground(Color.WHITE);
-        btnLogin.setFocusPainted(false);
-        btnLogin.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnLogin.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Get username and password
-                String username = txtUsername.getText();
-                String password = new String(txtPassword.getPassword());
-
-                // Validate input
-                if (validateLogin(username, password)) {
-                    // Proceed to Admin Dashboard
-                    new AdminDashboardForm();
-                    dispose(); // Close login form
-                } else {
-                    lblErrorMessage.setText("Invalid username or password.");
-                    lblErrorMessage.setVisible(true);
+        // Username field
+        JLabel usernameLabel = new JLabel("Username:");
+        usernameField = new JTextField(20);
+        usernameField.setText("Enter username");
+        usernameField.setForeground(Color.GRAY);
+        usernameField.setFont(new Font("Arial", Font.PLAIN, 14));
+        usernameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (usernameField.getText().equals("Enter username")) {
+                    usernameField.setText("");
+                    usernameField.setForeground(Color.BLACK);
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (usernameField.getText().isEmpty()) {
+                    usernameField.setText("Enter username");
+                    usernameField.setForeground(Color.GRAY);
                 }
             }
         });
-        panel.add(btnLogin);
+        mainPanel.add(usernameLabel);
+        mainPanel.add(usernameField);
 
-        // Register Button (Redirect to Registration Form)
-        btnRegister = new JButton("Register");
-        btnRegister.setBounds(210, 200, 150, 40);
-        btnRegister.setBackground(new Color(255, 99, 71)); // Tomato color
-        btnRegister.setForeground(Color.WHITE);
-        btnRegister.setFocusPainted(false);
-        btnRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnRegister.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Open the Registration Form
-                new RegistrationForm();
-                dispose(); // Close login form
+        // Password field
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordField = new JPasswordField(20);
+        passwordField.setText("Enter password");
+        passwordField.setForeground(Color.GRAY);
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
+        passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (new String(passwordField.getPassword()).equals("Enter password")) {
+                    passwordField.setText("");
+                    passwordField.setForeground(Color.BLACK);
+                }
+            }
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (new String(passwordField.getPassword()).isEmpty()) {
+                    passwordField.setText("Enter password");
+                    passwordField.setForeground(Color.GRAY);
+                }
             }
         });
-        panel.add(btnRegister);
+        mainPanel.add(passwordLabel);
+        mainPanel.add(passwordField);
 
-        // Display the login form
-        setVisible(true);
+        // Login button
+        loginButton = new JButton("Login");
+        loginButton.setBackground(new Color(41, 128, 185));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFont(new Font("Arial", Font.BOLD, 14));
+        loginButton.setFocusPainted(false);
+        loginButton.addActionListener(e -> loginUser());
+        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                loginButton.setBackground(new Color(52, 152, 219));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                loginButton.setBackground(new Color(41, 128, 185));
+            }
+        });
+        mainPanel.add(loginButton);
+
+        // Register button (redirect to RegistrationForm)
+        registerButton = new JButton("Don't have an account? Register");
+        registerButton.setBackground(new Color(46, 204, 113));
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        registerButton.setFocusPainted(false);
+        registerButton.addActionListener(e -> redirectToRegistrationForm());
+        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                registerButton.setBackground(new Color(39, 174, 96));
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                registerButton.setBackground(new Color(46, 204, 113));
+            }
+        });
+        mainPanel.add(registerButton);
+
+        // Adding main panel to the frame
+        add(mainPanel);
     }
 
-    private boolean validateLogin(String username, String password) {
-        // Simple username validation: must be alphabetic and not empty
-        if (username.isEmpty() || !username.matches("[a-zA-Z]+")) {
-            return false;
+    // Method to handle login
+    private void loginUser() {
+        String username = usernameField.getText();
+        String password = new String(passwordField.getPassword());
+
+        if (username.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both username and password.");
+            return;
         }
 
-        // Password validation: must contain at least 1 lowercase, 1 uppercase, 1 digit, and 1 special character
-        String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
-        Pattern pattern = Pattern.compile(passwordRegex);
-        Matcher matcher = pattern.matcher(password);
+        // Validate the user credentials
+        User user = UserDB.getUserByUsernameAndPassword(username, password);
 
-        return matcher.matches();
+        if (user != null) {
+            // User found, login successful
+            JOptionPane.showMessageDialog(this, "Login successful! Welcome, " + user.getFullName() + ".");
+            // Proceed to the next window or dashboard (e.g., Guest Dashboard)
+            dispose(); // Close the login form
+            new GuestDashboardForm(user);  // Open the guest dashboard form
+        } else {
+            // User not found
+            JOptionPane.showMessageDialog(this, "Invalid username or password.");
+        }
     }
 
+    // Method to redirect to the RegistrationForm
+    private void redirectToRegistrationForm() {
+        dispose(); // Close the login form
+        new RegistrationForm().setVisible(true); // Open the registration form
+    }
+
+    // Main method to run the LoginForm
     public static void main(String[] args) {
-        new LoginForm();
+        SwingUtilities.invokeLater(() -> new LoginForm().setVisible(true));
     }
 }

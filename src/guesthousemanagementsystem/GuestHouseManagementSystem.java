@@ -1,5 +1,7 @@
 package guesthousemanagementsystem;
 
+import Database.DBConnection;
+import gui.LoginForm;
 import javax.swing.*;
 import java.sql.SQLException;
 
@@ -7,8 +9,9 @@ public class GuestHouseManagementSystem {
 
     public static void main(String[] args) {
         try {
-            // Initialize the database connection
-            DBConnection.initialize();  // Make sure this method exists in DBConnection class
+            // Initialize the database connection directly
+            DBConnection.getConnection();  // Get the connection
+            
             System.out.println("Database connected successfully.");
             
             // Launch the LoginForm as the entry point of the system
@@ -24,3 +27,4 @@ public class GuestHouseManagementSystem {
         }
     }
 }
+

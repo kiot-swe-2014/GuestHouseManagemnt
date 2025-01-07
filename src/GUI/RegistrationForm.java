@@ -6,165 +6,240 @@ package gui;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import database.UserDB;
+import Database.UserDB;
+import models.User;
 
 public class RegistrationForm extends JFrame {
-
-    private JTextField txtUsername;
-    private JPasswordField txtPassword;
-    private JPasswordField txtConfirmPassword;
-    private JTextField txtFullName;
-    private JButton btnRegister;
-    private JButton btnBack;
+    private JTextField fullNameField, usernameField, emailField;
+    private JPasswordField passwordField;
+    private JButton registerButton, loginButton;
 
     public RegistrationForm() {
-        setTitle("Register - Guest House Management");
-        setSize(400, 300); // Adjust size as needed
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        // Frame setup
+        setTitle("User Registration");
+        setSize(400, 500); // Adjusted for better spacing
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
-        setResizable(false);
 
-        // Panel to hold all components with padding and background color
-        JPanel panel = new JPanel();
-        panel.setLayout(null); // Null layout for absolute positioning
-        panel.setBackground(new Color(255, 255, 255)); 
-        add(panel);
+        // Main panel with padding
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new GridLayout(8, 2, 10, 15)); // Increased vertical spacing
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
 
-        // Title Label
-        JLabel lblTitle = new JLabel("User Registration");
-        lblTitle.setFont(new Font("Arial", Font.BOLD, 24));
-        lblTitle.setBounds(120, 20, 250, 30); // Adjust position
-        panel.add(lblTitle);
+        // Title label
+        JLabel titleLabel = new JLabel("Register", JLabel.CENTER);
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 26));
+        titleLabel.setForeground(new Color(41, 128, 185));
+        mainPanel.add(titleLabel);
+        mainPanel.add(new JLabel()); // Empty space to maintain layout
 
-        // Username Label and TextField
-        JLabel lblUsername = new JLabel("Username:");
-        lblUsername.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblUsername.setBounds(50, 70, 100, 25);
-        panel.add(lblUsername);
-        
-        txtUsername = new JTextField();
-        txtUsername.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtUsername.setBounds(160, 70, 200, 25);
-        txtUsername.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 255), 1));
-        panel.add(txtUsername);
+        // Full Name Field
+        JLabel fullNameLabel = new JLabel("Full Name:");
+        fullNameField = new JTextField(20);
+        fullNameField.setText("Enter full name");
+        fullNameField.setForeground(Color.GRAY);
+        fullNameField.setFont(new Font("Arial", Font.PLAIN, 14));
+        fullNameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (fullNameField.getText().equals("Enter full name")) {
+                    fullNameField.setText("");
+                    fullNameField.setForeground(Color.BLACK);
+                }
+            }
 
-        // Password Label and PasswordField
-        JLabel lblPassword = new JLabel("Password:");
-        lblPassword.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblPassword.setBounds(50, 110, 100, 25);
-        panel.add(lblPassword);
-
-        txtPassword = new JPasswordField();
-        txtPassword.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtPassword.setBounds(160, 110, 200, 25);
-        txtPassword.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 255), 1));
-        panel.add(txtPassword);
-
-        // Confirm Password Label and PasswordField
-        JLabel lblConfirmPassword = new JLabel("Confirm Password:");
-        lblConfirmPassword.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblConfirmPassword.setBounds(50, 150, 150, 25);
-        panel.add(lblConfirmPassword);
-
-        txtConfirmPassword = new JPasswordField();
-        txtConfirmPassword.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtConfirmPassword.setBounds(160, 150, 200, 25);
-        txtConfirmPassword.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 255), 1));
-        panel.add(txtConfirmPassword);
-
-        // Full Name Label and TextField
-        JLabel lblFullName = new JLabel("Full Name:");
-        lblFullName.setFont(new Font("Arial", Font.PLAIN, 16));
-        lblFullName.setBounds(50, 190, 100, 25);
-        panel.add(lblFullName);
-
-        txtFullName = new JTextField();
-        txtFullName.setFont(new Font("Arial", Font.PLAIN, 14));
-        txtFullName.setBounds(160, 190, 200, 25);
-        txtFullName.setBorder(BorderFactory.createLineBorder(new Color(100, 100, 255), 1));
-        panel.add(txtFullName);
-
-        // Register Button with enhanced styling
-        btnRegister = new JButton("Register");
-        btnRegister.setFont(new Font("Arial", Font.BOLD, 16));
-        btnRegister.setBackground(new Color(34, 193, 195));
-        btnRegister.setForeground(Color.WHITE);
-        btnRegister.setBounds(160, 230, 120, 35);
-        btnRegister.setFocusPainted(false);
-        btnRegister.setBorderPainted(false);
-        btnRegister.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnRegister.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                register();
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (fullNameField.getText().isEmpty()) {
+                    fullNameField.setText("Enter full name");
+                    fullNameField.setForeground(Color.GRAY);
+                }
             }
         });
-        panel.add(btnRegister);
+        mainPanel.add(fullNameLabel);
+        mainPanel.add(fullNameField);
 
-        // Back Button with enhanced styling
-        btnBack = new JButton("Back to Login");
-        btnBack.setFont(new Font("Arial", Font.BOLD, 14));
-        btnBack.setBackground(new Color(255, 99, 71));
-        btnBack.setForeground(Color.WHITE);
-        btnBack.setBounds(300, 230, 120, 35); // Adjusted position to prevent overlap
-        btnBack.setFocusPainted(false);
-        btnBack.setBorderPainted(false);
-        btnBack.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-        btnBack.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new LoginForm(); // Open Login form
-                dispose(); // Close Registration form
+        // Username Field
+        JLabel usernameLabel = new JLabel("Username:");
+        usernameField = new JTextField(20);
+        usernameField.setText("Enter username");
+        usernameField.setForeground(Color.GRAY);
+        usernameField.setFont(new Font("Arial", Font.PLAIN, 14));
+        usernameField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (usernameField.getText().equals("Enter username")) {
+                    usernameField.setText("");
+                    usernameField.setForeground(Color.BLACK);
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (usernameField.getText().isEmpty()) {
+                    usernameField.setText("Enter username");
+                    usernameField.setForeground(Color.GRAY);
+                }
             }
         });
-        panel.add(btnBack);
+        mainPanel.add(usernameLabel);
+        mainPanel.add(usernameField);
 
-        // Show the form
-        setVisible(true);
+        // Email Field
+        JLabel emailLabel = new JLabel("Email:");
+        emailField = new JTextField(20);
+        emailField.setText("Enter email");
+        emailField.setForeground(Color.GRAY);
+        emailField.setFont(new Font("Arial", Font.PLAIN, 14));
+        emailField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (emailField.getText().equals("Enter email")) {
+                    emailField.setText("");
+                    emailField.setForeground(Color.BLACK);
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (emailField.getText().isEmpty()) {
+                    emailField.setText("Enter email");
+                    emailField.setForeground(Color.GRAY);
+                }
+            }
+        });
+        mainPanel.add(emailLabel);
+        mainPanel.add(emailField);
+
+        // Password Field
+        JLabel passwordLabel = new JLabel("Password:");
+        passwordField = new JPasswordField(20);
+        passwordField.setText("Enter password");
+        passwordField.setForeground(Color.GRAY);
+        passwordField.setFont(new Font("Arial", Font.PLAIN, 14));
+        passwordField.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                if (new String(passwordField.getPassword()).equals("Enter password")) {
+                    passwordField.setText("");
+                    passwordField.setForeground(Color.BLACK);
+                }
+            }
+
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                if (new String(passwordField.getPassword()).isEmpty()) {
+                    passwordField.setText("Enter password");
+                    passwordField.setForeground(Color.GRAY);
+                }
+            }
+        });
+        mainPanel.add(passwordLabel);
+        mainPanel.add(passwordField);
+
+        // Register Button
+        registerButton = new JButton("Register");
+        registerButton.setBackground(new Color(41, 128, 185));
+        registerButton.setForeground(Color.WHITE);
+        registerButton.setFocusPainted(false);
+        registerButton.setFont(new Font("Arial", Font.BOLD, 14));
+        registerButton.addActionListener(e -> registerUser());
+        registerButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                registerButton.setBackground(new Color(52, 152, 219));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                registerButton.setBackground(new Color(41, 128, 185));
+            }
+        });
+        mainPanel.add(registerButton);
+
+        // Login Button (if user already has an account)
+        loginButton = new JButton("Already have an account? Login");
+        loginButton.setBackground(new Color(46, 204, 113));
+        loginButton.setForeground(Color.WHITE);
+        loginButton.setFocusPainted(false);
+        loginButton.setFont(new Font("Arial", Font.PLAIN, 12));
+        loginButton.addActionListener(e -> redirectToLogin());
+        loginButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                loginButton.setBackground(new Color(39, 174, 96));
+            }
+
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                loginButton.setBackground(new Color(46, 204, 113));
+            }
+        });
+        mainPanel.add(loginButton);
+
+        // Adding the main panel to the frame
+        add(mainPanel);
     }
 
-    // Method to handle registration logic with validation
-    private void register() {
-        String username = txtUsername.getText();
-        String password = new String(txtPassword.getPassword());
-        String confirmPassword = new String(txtConfirmPassword.getPassword());
-        String fullName = txtFullName.getText();
+    private void registerUser() {
+        String fullName = fullNameField.getText().trim();
+        String username = usernameField.getText().trim();
+        String email = emailField.getText().trim();
+        String password = new String(passwordField.getPassword()).trim();
 
-        // Username validation: Not empty
-        if (username.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Username cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
+        if (fullName.isEmpty() || username.isEmpty() || email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields.");
             return;
         }
 
-        // Password validation: At least one uppercase letter, one lowercase letter, and one number
-        if (password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Password cannot be empty.", "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (!password.matches(".*[a-z].*") || !password.matches(".*[A-Z].*") || !password.matches(".*\\d.*")) {
-            JOptionPane.showMessageDialog(this, "Password must contain at least one uppercase letter, one lowercase letter, and one number.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Validate full name (letters and spaces only)
+        if (!fullName.matches("^[a-zA-Z ]+$")) {
+            JOptionPane.showMessageDialog(this, "Full Name must contain only letters and spaces.");
             return;
         }
 
-        // Confirm password validation
-        if (!password.equals(confirmPassword)) {
-            JOptionPane.showMessageDialog(this, "Passwords do not match.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Validate username (letters and numbers only, no special characters)
+        if (!username.matches("^[a-zA-Z0-9]+$")) {
+            JOptionPane.showMessageDialog(this, "Username must contain only letters and numbers.");
             return;
         }
 
-        // Call UserDB to register the user
-        boolean success = UserDB.registerUser(username, password, fullName);
-        if (success) {
-            JOptionPane.showMessageDialog(this, "Registration Successful!", "Success", JOptionPane.INFORMATION_MESSAGE);
-            new LoginForm(); // Redirect to login form
-            dispose(); // Close Registration form
-        } else {
-            JOptionPane.showMessageDialog(this, "Registration failed. Try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        // Validate email format using regular expression
+        String emailRegex = "^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,7}$";
+        if (!email.matches(emailRegex)) {
+            JOptionPane.showMessageDialog(this, "Invalid email format.");
+            return;
         }
+
+        // Validate password strength (minimum 8 characters, at least 1 number)
+        if (password.length() < 8 || !password.matches(".*\\d.*")) {
+            JOptionPane.showMessageDialog(this, "Password must be at least 8 characters long and contain at least one number.");
+            return;
+        }
+
+        try {
+            // Check if the username already exists in the database
+            boolean usernameExists = UserDB.usernameExists(username);
+            if (usernameExists) {
+                JOptionPane.showMessageDialog(this, "Username already exists. Please choose a different username.");
+                return;
+            }
+
+            // Register user in the database
+            User newUser = new User(0, fullName, username, email, password);
+            boolean isAdded = UserDB.addUser(newUser);
+
+            if (isAdded) {
+                JOptionPane.showMessageDialog(this, "User Registered Successfully!");
+
+                // Redirect to the Guest Dashboard after registration
+                dispose(); // Close the registration form
+                new GuestDashboardForm(newUser); // Pass the newUser to the dashboard form
+            } else {
+                JOptionPane.showMessageDialog(this, "Registration failed. Try again.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "An error occurred while registering. Please try again.");
+        }
+    }
+
+    private void redirectToLogin() {
+        dispose(); // Close the registration form
+        new LoginForm().setVisible(true); // Open the login form
     }
 
     public static void main(String[] args) {
-        new RegistrationForm();
+        SwingUtilities.invokeLater(() -> new RegistrationForm().setVisible(true));
     }
 }
+
+

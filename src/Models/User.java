@@ -4,46 +4,32 @@
  */
 package models;
 
+import java.util.List;
+
 public class User {
+    private int id;
+    private String fullName;
+    private String username;
+    private String email;
+    private String password;
+    private List<Booking> bookings;  // New field for storing a list of bookings
 
-    private int userId;       // Primary Key
-    private String username;  // Username
-    private String password;  // Password
-    private String fullName;  // Full name of the user
-    private String status;    // User status (active or inactive)
-
-    // Constructor for the user
-    public User(int userId, String username, String password, String fullName, String status) {
-        this.userId = userId;
-        this.username = username;
-        this.password = password;
+    // Updated Constructor
+    public User(int id, String fullName, String username, String email, String password) {
+        this.id = id;
         this.fullName = fullName;
-        this.status = status;
-    }
-
-    // Getters and setters for each field
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
         this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
+        this.email = email;
         this.password = password;
+    }
+
+    // Getters and setters
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getFullName() {
@@ -54,16 +40,36 @@ public class User {
         this.fullName = fullName;
     }
 
-    public String getStatus() {
-        return status;
+    public String getUsername() {
+        return username;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    // Optional: You can add custom methods for handling user logic like 'isActive()' if needed
-    public boolean isActive() {
-        return "active".equalsIgnoreCase(status); // Checks if the user is active
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // Getter and setter for bookings
+    public List<Booking> getBookings() {
+        return bookings;
+    }
+
+    public void setBookings(List<Booking> bookings) {
+        this.bookings = bookings;
     }
 }

@@ -5,45 +5,42 @@
 package models;
 
 public class Room {
+    private int roomId;
+    private String type;
+    private String status;
+    private double price;
 
-    private String roomNumber;   // Unique room number
-    private String roomType;     // Type of the room (Single, Double, Suite, etc.)
-    private boolean isAvailable; // Availability status (true if available)
-    private double price;        // Price per night for the room
-    private int capacity;        // Room capacity (e.g., 2 people, 4 people, etc.)
-
-    // Constructor to initialize the room
-    public Room(String roomNumber, String roomType, boolean isAvailable, double price, int capacity) {
-        this.roomNumber = roomNumber;
-        this.roomType = roomType;
-        this.isAvailable = isAvailable;
+    // Constructor
+    public Room(int roomId, String type, String status, double price) {
+        this.roomId = roomId;
+        this.type = type;
+        this.status = status;
         this.price = price;
-        this.capacity = capacity;
     }
 
     // Getters and Setters
-    public String getRoomNumber() {
-        return roomNumber;
+    public int getRoomId() {
+        return roomId;
     }
 
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
+    public void setRoomId(int roomId) {
+        this.roomId = roomId;
     }
 
-    public String getRoomType() {
-        return roomType;
+    public String getType() {
+        return type;
     }
 
-    public void setRoomType(String roomType) {
-        this.roomType = roomType;
+    public void setType(String type) {
+        this.type = type;
     }
 
-    public boolean isAvailable() {
-        return isAvailable;
+    public String getStatus() {
+        return status;
     }
 
-    public void setAvailable(boolean available) {
-        isAvailable = available;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public double getPrice() {
@@ -54,42 +51,10 @@ public class Room {
         this.price = price;
     }
 
-    public int getCapacity() {
-        return capacity;
+    // Override toString method for display in combo box
+    @Override
+    public String toString() {
+        return type + " - $" + price + " (" + status + ")";
     }
-
-    public void setCapacity(int capacity) {
-        this.capacity = capacity;
-    }
-
-    // Method to mark the room as occupied
-    public void occupyRoom() {
-        this.isAvailable = false;
-    }
-
-    // Method to mark the room as available
-    public void makeAvailable() {
-        this.isAvailable = true;
-    }
-
-    // Method to display room details (could be used to show in the admin dashboard)
-    public String getRoomDetails() {
-        String availability = isAvailable ? "Available" : "Occupied";
-        return "Room Number: " + roomNumber + "\n" +
-               "Room Type: " + roomType + "\n" +
-               "Price: $" + price + " per night\n" +
-               "Capacity: " + capacity + " persons\n" +
-               "Status: " + availability;
-    }
-
-    // Method to compare room prices
-    public int comparePrice(Room otherRoom) {
-        if (this.price < otherRoom.price) {
-            return -1;  // This room is cheaper
-        } else if (this.price > otherRoom.price) {
-            return 1;   // This room is more expensive
-        }
-        return 0;   // Both rooms have the same price
-    }
-
 }
+
